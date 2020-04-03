@@ -1,0 +1,85 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: #f2f2f2;
+  font-family: arial;
+}
+header {
+  padding: 12px;
+  background: #288e81;
+  color: white;
+  overflow: hidden;
+}
+header h3 {
+  display: inline-block;
+  margin: 0;
+}
+header .levels {
+  text-align: center;
+}
+header .lives {
+  font-size: 1em;
+  float: right;
+  margin-top: 3px;
+}
+header .lives .warning {
+  color: #ff822c;
+  font-weight: bold;
+}
+div.wrap {
+  padding: 5px;
+}
+div.images {
+  text-align: center;
+  margin-top: 40px;
+}
+div.images .top, div.images .bottom {
+  display: table;
+  margin: auto;
+}
+div.images img {
+  width: 100px;
+}
+div.answer {
+  background: white;
+  padding: 7px;
+  margin: 10px auto;
+  max-width: 400px;
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  border-radius: 4px;
+  text-align: center;
+}
+div.answer button,
+div.guesses button {
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 4px;
+  outline: none;
+  font-size: 1.2em;
+  text-transform: uppercase;
+  color: white;
+
+}
+button.empty {
+  background: #dedede;
+  box-shadow: 2px 2px 30px #adadad inset;
+  color: transparent !important;
+}
+button.filled {
+  background: #288e81;
+}
+
+div.guesses {
+  margin: 50px auto;
+  display: block;
+  max-width: 400px;
+  text-align: center;
+}
+div.guesses button.filled {
+  background: #288e81;
+  margin: 4px 1px; 
+}
