@@ -25,11 +25,11 @@
 			buttons.forEach(function (btn) {
 				
 				if (btn.textContent == e.key.toUpperCase()) {
-					if (btn.className == 'filled') {
-						btn.className = 'empty';
-					} else {
-						btn.className = 'filled';
-					}
+					btn.className = 'empty';
+					// if (btn.className == 'filled') {
+					// } else {
+					// 	btn.className = 'filled';
+					// }
 				}
 
 			})
@@ -44,8 +44,28 @@
 		}
 		return tmp;
 	}
+	function readLevel() {
+		return localStorage.getItem('level');
+	}
+	function initLevel() {
+		localStorage.setItem('level', 1);
+	}
+	function updateLevel() {
+		const oldlevel = readLevel();
+		
+		if (!oldlevel) {
+			localStorage.setItem('level', 1);			
+		} else {
+			localStorage.setItem('level', parseInt(oldlevel) + 1);
+		}
+	}
 	function fetchWord() {
-		targetWord = wordList[Math.floor(Math.random() * wordList.length)];
+		console.log(wordList.length);
+		if (readLevel() - 1 < wordList.length) {
+			targetWord = wordList[readLevel() -1];
+		} else {
+			alert('All level are completed');
+		}
 	}
 	function hideWord() {
 		answerBntParent.innerHTML = '';
@@ -66,7 +86,9 @@
 		return hiddenWord;
 	}
 	function storeGuess(key) {
-		if (/^[a-zA-Z]/.test(key)) {
+		if (/^[a-zA-Z]$/.test(key)) {
+			console.log(key);
+			
 			if (!guesses.includes(key)) {
 				guesses.push(key.toLowerCase());
 			}			
@@ -75,22 +97,27 @@
 	function reviewLives() {
 		var remainingLives = maxLives;
 		var str = targetWord.toLowerCase();
+		const liveHtm = document.getElementById('remaining-lives');
 
 		guesses.filter(function (val) {
 			if (!str.includes(val)) {
 				remainingLives--;	
+				liveHtm.textContent = remainingLives;
 			}
 		})
 
 		if (remainingLives <= 0) {
-			alert('You lost, try again');
-			resetGame()
+			setTimeout(function () {
+				alert('You lost, try again');
+				resetGame()
+			},10)
 		}
 	}
 	function checkIfWon() {
 		if (targetWord == hideWord()) {
 			setTimeout(function () {
 				alert('You won');
+				updateLevel();
 				resetGame();
 			},200)
 		}
@@ -110,9 +137,17 @@
 		checkIfWon();
 	}
 	function main() {
+		if (!readLevel()) {
+			initLevel();
+		}
 		fetchWord();
 		console.log(targetWord);
 		console.log(hideWord());
+
+		const liveHtm = document.getElementById('remaining-lives');		
+		const levelHtm = document.getElementById('current-level');
+		levelHtm.textContent = readLevel();
+		liveHtm.textContent = maxLives;
 		const abc = 'abcdefghijklmnñopqrstuvwxyz'.split('');
 		abc.forEach(renderGuessesBtn);
 	}
