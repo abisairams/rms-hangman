@@ -62,7 +62,7 @@ div.guesses button {
   font-size: 1.2em;
   text-transform: uppercase;
   color: white;
-
+  margin: 4px 1px; 
 }
 button.empty {
   background: #dedede;
@@ -81,5 +81,4 @@ div.guesses {
 }
 div.guesses button.filled {
   background: #288e81;
-  margin: 4px 1px; 
 }
