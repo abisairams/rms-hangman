@@ -87,7 +87,7 @@
 	}
 	function storeGuess(key) {
 		if (/^[a-zA-Z]$/.test(key)) {
-			console.log(key);
+			// console.log(key);
 			
 			if (!guesses.includes(key)) {
 				guesses.push(key.toLowerCase());
