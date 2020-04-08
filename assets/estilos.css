@@ -12,6 +12,7 @@ header {
   background: #288e81;
   color: white;
   overflow: hidden;
+  font-size: 1.3em;
 }
 header h3 {
   display: inline-block;
