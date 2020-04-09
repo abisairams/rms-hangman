@@ -83,3 +83,30 @@ div.guesses {
 div.guesses button.filled {
   background: #288e81;
 }
+
+
+/* Store page rules */
+
+.group {
+  background: #fff;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.16);
+  display: flex;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+.group .item-box {
+  width: 30%;
+  margin: 5px;
+  padding: 10px;
+  background: #f2f2f2;
+  text-align: center;
+}
+.group .item-box label {
+  display: block;
+  font-size: 1em;
+  font-weight: bold;
+  color: #288e81;
+}
+.group .item-box button {
+  padding: 5px;
+}
