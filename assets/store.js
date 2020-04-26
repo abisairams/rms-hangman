@@ -140,8 +140,14 @@
     async function updateBank(cant, operation) {
         const oldCredits = await readBank();
         const newCredits = eval(`${oldCredits} ${operation} ${cant}`);
-        idb.update('bank', 1, {credits: newCredits}, async function (e) {
-            creditHtml.innerText = await readBank();            
+        return new Promise(function (resolve, reject) {
+            idb.update('bank', 1, {credits: newCredits}, async function (e) {
+                if (e) {
+                    resolve(true);
+                } else {
+                    resolve(false); // just need bool so not trigger { @reject }
+                }
+            })
         })
     }
     async function updateStore(item, cant, operation) {
@@ -173,10 +179,14 @@
 
 
         if (await enoughCredit(price)) {
-            updateBank(price, '-');
-            updateStore(product, cant, '+');
+            
+            if (await updateBank(price, '-')) {
+                updateStore(product, cant, '+');
+                creditHtml.innerText = await readBank();
+            } else {
+                console.log('Something was wrong, try again.')
+            }
 
-            creditHtml.innerText = await readBank();
         } else {
             alert('Not enough credits');
         }
