@@ -1,30 +1,39 @@
 function initPacks() {
     const packList = [
         {
-            item: "show",
-            pack1: { cant: 1, price: 5 } ,
-            pack2: { cant: 10, price: 20 },
-            pack3: { cant: 100, price: 150 }
+            name: "show",
+            img: 'show.svg',
+            packs: {
+                pack1: { cant: 1, price: 5 } ,
+                pack2: { cant: 10, price: 20 },
+                pack3: { cant: 100, price: 150 }
+            }
             
         },
         {
-            item: "blackbox", 
-            pack1: { cant: 1, price: 10 },
-            pack2: { cant: 10, price:  30},
-            pack3: { cant: 100, price: 200 }
+            name: "blackbox", 
+            img: 'box.svg',
+            packs: {
+                pack1: { cant: 1, price: 10 },
+                pack2: { cant: 10, price:  30},
+                pack3: { cant: 100, price: 200 }
+            }
         },
         {
-            item: "clean",
-            pack1: { cant: 1, price: 5 },
-            pack2: { cant: 10, price: 20 },
-            pack3: { cant: 100, price: 150 }
+            name: "clean",
+            img: 'clean.svg',
+            packs: {
+                pack1: { cant: 1, price: 5 },
+                pack2: { cant: 10, price: 20 },
+                pack3: { cant: 100, price: 150 }
+            }
         }
     ]
 
     packList.forEach((pack) => {
         const add = idb.add('packs', pack);
         add.onsuccess = function (e) {
-            console.log(`pack ${pack.item} added`);
+            console.log(`pack ${pack.name} added`);
             
         }
         
@@ -79,7 +88,7 @@ function readPack(item, pack) {
     return new Promise((resolve, reject) => {
         const transaction = idb.read('packs', item);
         transaction.onsuccess = function (e) {
-            resolve(e.target.result[pack]);                
+            resolve(e.target.result.packs[pack]);                
         }
     })
 }

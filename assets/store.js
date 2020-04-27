@@ -3,7 +3,7 @@ const idb = new Idb();
 (async function () {
     
     const req = idb.open('rms-hangman', 1, function (e) {
-        const packs = idb.createTable('packs', { keyPath: 'item', autoIncrement: false, unique: true });
+        const packs = idb.createTable('packs', { keyPath: 'name', autoIncrement: false, unique: true });
         const store = idb.createTable('store', {keyPath: 'name', autoIncrement: false, unique: true});
         const banck = idb.createTable('bank', {keyPath: 'id', autoIncrement: true, unique: true});
     })
@@ -29,14 +29,41 @@ const idb = new Idb();
         } else {
             creditHtml.innerText = await readBank();
         }
-        
+
+        const listPacks = await readPacksTable();
+        listPacks.forEach(renderPack);
+
     }
 
+    function readPacksTable() {
+        return new Promise((resolve, reject) => {
+            const read = idb.readAll('packs')
+            read.onsuccess = function (e) {
+                resolve(e.target.result);
+            }            
+        })
+    }
+    function renderPack(item) {
+        const parentBox = newElement('div', { class: `group ${item.name}` });
+        const packs = item.packs;
+        for (pack in packs) {
 
+            const label = newElement('label', { textContent: `${packs[pack].cant} x $${packs[pack].price}`});
+            const img = newElement('img', {src: `img/${item.img}`});
+            const button = newElement('button', {name: 'buy', price: packs[pack].price, cant: packs[pack].cant, pack: pack, product: item.name, textContent: 'Comprar'})
+            const box = newElement('div', { class: 'item-box' }, [label, img, button]);
+
+            button.onclick = handleEvent
+
+
+            parentBox.appendChild(box);
+
+        }
+        parentBoxes.appendChild(parentBox);
+    }
     async function handleEvent() {
         const pack = this.getAttribute('pack');
         const product = this.getAttribute('product');
-
         const buyDetails = await readPack(product, pack);
         const cant = buyDetails.cant;
         const price = buyDetails.price;
@@ -57,11 +84,9 @@ const idb = new Idb();
 
     }
 
+    const parentBoxes = document.getElementById('parentBoxes');
     const creditHtml = document.getElementById('credits');
-    const buttons = document.getElementsByName('buy');
-    
-    buttons.forEach(function (button) {
-        button.addEventListener('click', handleEvent, false);        
-    });    
+    parentBoxes.innerHTML = '';
+     
     
 })()
