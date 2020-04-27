@@ -89,9 +89,11 @@
 		if (/^[a-zA-Z]$/.test(key)) {
 			// console.log(key);
 			
-			if (!guesses.includes(key)) {
+			if (!guesses.includes(key.toLowerCase())) {
 				guesses.push(key.toLowerCase());
-			}			
+				return false;
+			}
+			return true;
 		}
 	}
 	function reviewLives() {
@@ -131,9 +133,11 @@
 	}
 	function update(e) {
 		toggleBtnState(e);
-		storeGuess(e.key || e.target.textContent);
+		const isKeyStored = storeGuess(e.key || e.target.textContent);
 		console.log(hideWord());
-		reviewLives();
+		if (!isKeyStored) {
+			reviewLives();
+		}
 		checkIfWon();
 	}
 	function main() {
