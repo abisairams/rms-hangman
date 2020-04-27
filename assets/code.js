@@ -81,9 +81,21 @@
 				const props = { class: 'filled', textContent: letter };
 				const btn = newElement('button', props);
 				answerBntParent.appendChild(btn);
+				disableMatchButton(letter);
 			}
 		})
 		return hiddenWord;
+	}
+	function disableMatchButton(key) {
+		console.log(key);
+		const buttons = document.querySelectorAll('button');
+		buttons.forEach(function (btn) {
+
+			if (btn.textContent == key.toUpperCase()) {
+				btn.disabled = true;
+			}
+
+		})
 	}
 	function storeGuess(key) {
 		if (/^[a-zA-Z]$/.test(key)) {
