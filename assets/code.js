@@ -20,12 +20,14 @@
 			} else {
 				e.target.className = 'filled';
 			}
+			e.target.disabled = true;
 		} else {
 			const buttons = document.querySelectorAll('button');
 			buttons.forEach(function (btn) {
 				
 				if (btn.textContent == e.key.toUpperCase()) {
 					btn.className = 'empty';
+					btn.disabled = true;
 					// if (btn.className == 'filled') {
 					// } else {
 					// 	btn.className = 'filled';
