@@ -89,7 +89,6 @@
 		return hiddenWord;
 	}
 	function disableMatchButton(key) {
-		console.log(key);
 		const buttons = document.querySelectorAll('button');
 		buttons.forEach(function (btn) {
 
