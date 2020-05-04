@@ -6,6 +6,8 @@
   <meta http-equiv=X-UA-Compatible content="IE=edge">
   <meta name=viewport content="width=device-width,initial-scale=1">
   <link rel=stylesheet href=assets/estilos.css>
+  <link rel="shortcut icon" href="img/icons/qgo 512px.png" type="image/x-icon">
+  <link rel="manifest" href="manifest.json">
   <title>Rms Hangman</title>
 </head>
 <body>
@@ -37,6 +39,17 @@
     </div>
   </div>
 
+  <script>
+    
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js')
+        .then(res => {
+          console.log('Service worker is registered');
+        })
+        .catch(err => {throw err});
+    }
+  
+  </script>
   <script src="assets/mylibray.js"></script>  
   <script src="assets/code.js"></script>
 </body>
