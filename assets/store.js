@@ -2,6 +2,7 @@
     
     const idb = new Idb();
     const req = idb.open('rms-hangman', 1, function (e) {
+        const packs = idb.createTable('packs', { keyPath: 'item', autoIncrement: false, unique: true });
         const store = idb.createTable('store', {keyPath: 'name', autoIncrement: false, unique: true});
         const banck = idb.createTable('bank', {keyPath: 'id', autoIncrement: true, unique: true});
     })
@@ -9,6 +10,11 @@
         idb.db = e.target.result;
         // Check if init data is in storage
         
+        const hasDataPacksTable = await hasData('packs');
+        if (!hasDataPacksTable) {
+            initPacks();
+        }
+
         const hasDataStoreTable = await hasData('store');
         if (!hasDataStoreTable) {
             initStore();
@@ -22,8 +28,41 @@
         } else {
             creditHtml.innerText = await readBank();
         }
+        
     }
-    
+    function initPacks() {
+        const packList = [
+            {
+                item: "show",
+                pack1: { cant: 1, price: 5 } ,
+                pack2: { cant: 10, price: 20 },
+                pack3: { cant: 100, price: 150 }
+                
+            },
+            {
+                item: "blackbox", 
+                pack1: { cant: 1, price: 10 },
+                pack2: { cant: 10, price:  30},
+                pack3: { cant: 100, price: 200 }
+            },
+            {
+                item: "clean",
+                pack1: { cant: 1, price: 5 },
+                pack2: { cant: 10, price: 20 },
+                pack3: { cant: 100, price: 150 }
+            }
+        ]
+
+        packList.forEach((pack) => {
+            const add = idb.add('packs', pack);
+            add.onsuccess = function (e) {
+                console.log(`pack ${pack.item} added`);
+                
+            }
+            
+        })
+        
+    }
     function initStore(e) {
         const items = [
             { name: 'show', cant: 3 },
@@ -67,6 +106,14 @@
                 }
             })
         });
+    }
+    function readPack(item, pack) {
+        return new Promise((resolve, reject) => {
+            const transaction = idb.read('packs', item);
+            transaction.onsuccess = function (e) {
+                resolve(e.target.result[pack]);                
+            }
+        })
     }
     function readBank() {
         return new Promise(function (resolve, reject) {
@@ -117,9 +164,13 @@
     }
 
     async function handleEvent() {
-        const cant = this.getAttribute('cant');
-        const price = this.getAttribute('price');
+        const pack = this.getAttribute('pack');
         const product = this.getAttribute('product');
+
+        const buyDetails = await readPack(product, pack);
+        const cant = buyDetails.cant;
+        const price = buyDetails.price;
+
 
         if (await enoughCredit(price)) {
             updateBank(price, '-');
