@@ -39,6 +39,12 @@ const idb = new Idb();
 			showAlert(pack);
 		} else {
 			applyShorcut(pack);
+			await updateStore(pack, 1, '-');
+			const updatedCant = await readStore(pack);
+			if (!updatedCant) {
+				this.className = 'disabled';
+			}
+
 		}
 	}
 
