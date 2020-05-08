@@ -31,7 +31,9 @@ const idb = new Idb();
 
 	async function handleEvent() {
 		const pack = this.alt;
-		if (pack == 'store') return;
+		if (pack == 'store') {
+			window.location = 'store.html';
+		};
 
 		const cant = await readStore(pack);
 		if (!cant) {
