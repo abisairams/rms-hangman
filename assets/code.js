@@ -1,4 +1,113 @@
+const idb = new Idb();
 (async function () {
+
+	const req = idb.open('rms-hangman', 1, function (e) {
+		idb.createTable('packs', { keyPath: 'name', autoIncrement: false, unique: true });
+		idb.createTable('store', { keyPath: 'name', autoIncrement: false, unique: true });
+		idb.createTable('bank', { keyPath: 'id', autoIncrement: true, unique: true });
+	})
+
+	req.onsuccess = async function (e) {
+		idb.db = e.target.result;
+
+		const hasDataPacksTable = await hasData('packs');
+		if (!hasDataPacksTable) {
+			initPacks();
+		}
+
+		const hasDataStoreTable = await hasData('store');
+		if (!hasDataStoreTable) {
+			initStore();
+		}
+
+		const hasDataBankTable = await hasData('bank');
+
+		if (!hasDataBankTable) {
+			await initBank();
+		}
+
+		checkStore();
+	}
+
+	async function handleEvent() {
+		const pack = this.alt;
+		if (pack == 'store') return;
+
+		const cant = await readStore(pack);
+		if (!cant) {
+			this.className = 'disabled';
+			showAlert(pack);
+		} else {
+			applyShorcut(pack);
+		}
+	}
+
+	function applyShorcut(pack) {
+		switch (pack) {
+			case 'clean':
+				cleanOneButton(); break;
+			case 'show':
+				showOneLetter(); break;
+			case 'blackbox':
+				randomGift(); break;
+			default:
+				break;
+		}
+	}
+
+	async function showOneLetter() {
+		for (let i = 0; i < targetWord.length; i++) {
+			if (targetWord[i] !== hideWord()[i]) {
+
+				const btn = await findButton(targetWord[i]);
+				btn.click();
+				break;
+
+			}
+		}
+	}
+	function cleanOneButton() {
+
+	}
+	function randomGift() {
+
+	}
+
+	function showAlert(pack) {
+		console.log(`No hay ${pack} disponibles`);
+
+	}
+
+	async function checkStore() {
+		const packs = idb.readAll('store');
+		packs.onsuccess = function (e) {
+			result = e.target.result;
+			result.map(pack => {
+				if (pack.cant == 0) {
+					const elem = document.querySelector(`img[alt=${pack.name}`);
+					elem.className = 'disabled';
+				}
+			})
+		}
+	}
+
+	function findButton(key) {
+		const buttons = document.querySelectorAll('button');
+		return new Promise((resolve, reject) => {
+			buttons.forEach(function (btn) {
+				if (btn.textContent == key.toUpperCase()) {
+					resolve(btn);
+				}
+			})
+		})
+	}
+
+	const itemsAvatar = document.querySelectorAll('img');
+	itemsAvatar.forEach(item => item.addEventListener('click', handleEvent, false));
+
+
+
+
 	const guessesBtnParent = document.getElementById('guesses-container');
 	const answerBntParent = document.getElementById('answer');
 	var wordList = await loadDB('./assets/database.json');
