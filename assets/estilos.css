@@ -44,6 +44,9 @@ div.images .top, div.images .bottom {
 div.images img {
   width: 100px;
 }
+div.images img.disabled {
+  opacity: 0.2;
+}
 div.answer {
   background: white;
   padding: 7px;
