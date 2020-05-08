@@ -107,7 +107,12 @@ function readStore(item) {
     return new Promise(function (resolve, reject) {
         const cant = idb.read('store', item);
         cant.onsuccess = function (e) {
-            resolve(e.target.result.cant);
+            if (e.target.result) {
+                resolve(e.target.result.cant); 
+            } else {
+                resolve(null);
+            }
+            
         }
         cant.onerror = function (err) {
             reject(err)
