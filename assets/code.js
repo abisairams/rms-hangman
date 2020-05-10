@@ -64,15 +64,15 @@ const idb = new Idb();
 	}
 
 	async function showOneLetter() {
+		const encrypted = [];
 		for (let i = 0; i < targetWord.length; i++) {
 			if (targetWord[i] !== hideWord()[i]) {
-
-				const btn = await findButton(targetWord[i]);
-				btn.click();
-				break;
-
+				encrypted.push(targetWord[i]);
 			}
 		}
+		const randomBtn = encrypted[Math.floor(Math.random() * encrypted.length)];
+		const btn = await findButton(randomBtn);
+		btn.click();
 	}
 	function cleanOneButton() {
 		const buttons = document.querySelectorAll('#guesses-container button.filled');
