@@ -40,7 +40,9 @@ const idb = new Idb();
 			this.className = 'disabled';
 			showAlert(pack);
 		} else {
-			applyShorcut(pack);
+			// this validation is to check if guessing word is in progress,
+			// if response is false means shorcut is completed;
+			if (applyShorcut(pack) == false) return; 
 			await updateStore(pack, 1, '-');
 			const updatedCant = await readStore(pack);
 			if (!updatedCant) {
@@ -53,9 +55,9 @@ const idb = new Idb();
 	function applyShorcut(pack) {
 		switch (pack) {
 			case 'clean':
-				cleanOneButton(); break;
+				return cleanOneButton(); break;
 			case 'show':
-				showOneLetter(); break;
+				return showOneLetter(); break;
 			case 'blackbox':
 				randomGift(); break;
 			default:
@@ -70,9 +72,13 @@ const idb = new Idb();
 				encrypted.push(targetWord[i]);
 			}
 		}
+		// return false if the word is already guessed,
+		// to not continue on main function
+		if (encrypted.length == 0) return false;
 		const randomBtn = encrypted[Math.floor(Math.random() * encrypted.length)];
 		const btn = await findButton(randomBtn);
 		btn.click();
+		return true;
 	}
 	function cleanOneButton() {
 		const buttons = document.querySelectorAll('#guesses-container button.filled');
@@ -87,8 +93,10 @@ const idb = new Idb();
 			if (!targetWord.includes(btn.textContent.toLowerCase())) {
 				noPlayingWords.push(btn);				
 			}
-		})		
-		if (noPlayingWords.length == 0) return;
+		})
+		// return false if all no playing buttons has been checked, 
+		// to not continue on main function
+		if (noPlayingWords.length == 0) return false;
 		const randomBtn = noPlayingWords[Math.floor(Math.random() * noPlayingWords.length)];
 		randomBtn.className = 'empty';
 		randomBtn.disabled = true;
