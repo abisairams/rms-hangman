@@ -102,7 +102,19 @@ const idb = new Idb();
 		randomBtn.disabled = true;
 	}
 	function randomGift() {
+		const gifts = [giveFreeMoney, cleanOneButton, showOneLetter];
 
+		const random = gifts[Math.floor(Math.random() * gifts.length)];
+		random()
+	}
+
+	async function giveFreeMoney() {
+		const availibleCredits = [20, 40, 50, 80, 100, 1000];
+		const credit = availibleCredits[Math.floor((Math.random() * availibleCredits.length))];
+		const doTransaction = await updateBank(credit, '+');
+		if (doTransaction) {
+			alert(`${credit} creditos depositados a tu cuenta`)
+		}
 	}
 
 	function showAlert(pack) {
