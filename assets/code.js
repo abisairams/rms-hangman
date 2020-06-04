@@ -33,6 +33,7 @@ const idb = new Idb();
 		const pack = this.alt;
 		if (pack == 'store') {
 			window.location = 'store.html';
+			return;
 		};
 
 		const cant = await readStore(pack);
