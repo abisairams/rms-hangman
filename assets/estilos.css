@@ -6,6 +6,8 @@
 body {
   background: #f2f2f2;
   font-family: arial;
+  max-width: 400px;
+  margin: 0 auto;
 }
 header {
   padding: 12px;
@@ -89,7 +91,9 @@ div.guesses button.filled {
 
 
 /* Store page rules */
-
+.modal.store {
+  margin-bottom: 50px;
+}
 .group {
   background: #fff;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.16);
@@ -112,4 +116,52 @@ div.guesses button.filled {
 }
 .group .item-box button {
   padding: 5px;
+}
+
+
+.modal-store {
+  margin: auto;
+  max-width: 400px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #f2f2f2;
+}
+.modal-store.closed {
+  display: none;
+}
+footer {
+  background: #f2f2f2;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 10px;
+  width: 100%;
+  display: block;
+}
+footer button.close {
+  margin: auto;
+  display: block;
+  bottom: 10px;
+  width: 100%;
+  max-width: 400px;
+  padding: 8px 25px;
+  border-radius: 5px;
+  border: 2px solid white;
+  background: #288e81;
+  color: white;
+  outline: none;
+  font-size: 1.2em;
+}
+.modal-store button.close:active {
+  border-color: #f3d47f;
+}
+
+@media (max-width: 370px) {
+  .group .item-box label {
+    font-size: 0.8em;
+  }
 }
