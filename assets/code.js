@@ -110,7 +110,7 @@ const idb = new Idb();
 	}
 
 	async function giveFreeMoney() {
-		const availibleCredits = [20, 40, 50, 80, 100, 1000];
+		const availibleCredits = [5,10,20,30,40,50];
 		const credit = availibleCredits[Math.floor((Math.random() * availibleCredits.length))];
 		const doTransaction = await updateBank(credit, '+');
 		if (doTransaction) {
@@ -213,6 +213,7 @@ const idb = new Idb();
 			localStorage.setItem('level', 1);			
 		} else {
 			localStorage.setItem('level', parseInt(oldlevel) + 1);
+			localStorage.setItem('guesses', '');
 		}
 	}
 	function fetchWord() {
@@ -226,6 +227,8 @@ const idb = new Idb();
 	function hideWord() {
 		answerBntParent.innerHTML = '';
 		var hiddenWord = '';
+		guesses = localStorage.getItem('guesses').split('');
+
 		targetWord.split('').map(letter => {
 			if (!guesses.includes(letter.toLowerCase())) {
 				hiddenWord += '-';
@@ -237,17 +240,21 @@ const idb = new Idb();
 				const props = { class: 'filled', textContent: letter };
 				const btn = newElement('button', props);
 				answerBntParent.appendChild(btn);
-				disableMatchButton(letter);
 			}
 		})
+
+		guesses.forEach(disableMatchButton);
+		
 		return hiddenWord;
 	}
 	function disableMatchButton(key) {
-		const buttons = document.querySelectorAll('button');
+		const buttons = document.querySelectorAll('#guesses-container button.filled');
+		console.log(key)
 		buttons.forEach(function (btn) {
 
 			if (btn.textContent == key.toUpperCase()) {
 				btn.disabled = true;
+				btn.className = 'empty';
 			}
 
 		})
@@ -258,6 +265,7 @@ const idb = new Idb();
 			
 			if (!guesses.includes(key.toLowerCase())) {
 				guesses.push(key.toLowerCase());
+				localStorage.setItem('guesses', localStorage.getItem('guesses') + key.toLowerCase());
 				return false;
 			}
 			return true;
@@ -267,7 +275,7 @@ const idb = new Idb();
 		var remainingLives = maxLives;
 		var str = targetWord.toLowerCase();
 		const liveHtm = document.getElementById('remaining-lives');
-
+		guesses = localStorage.getItem('guesses').split('')
 		guesses.filter(function (val) {
 			if (!str.includes(val)) {
 				remainingLives--;	
@@ -294,6 +302,7 @@ const idb = new Idb();
 	function resetGame() {
 		const parent = document.getElementById('guesses-container');
 		parent.innerHTML = '';
+		localStorage.setItem('guesses', '');
 		guesses = [];
 		targetWord = '';
 		main();
@@ -304,16 +313,19 @@ const idb = new Idb();
 		console.log(hideWord());
 		if (!isKeyStored) {
 			reviewLives();
+			console.log(hideWord())
 		}
 		checkIfWon();
 	}
 	function main() {
+		if (!localStorage.getItem('guesses')) {
+			localStorage.setItem('guesses', '')
+		}
 		if (!readLevel()) {
 			initLevel();
 		}
 		fetchWord();
-		console.log(targetWord);
-		console.log(hideWord());
+
 
 		const liveHtm = document.getElementById('remaining-lives');		
 		const levelHtm = document.getElementById('current-level');
@@ -321,6 +333,10 @@ const idb = new Idb();
 		liveHtm.textContent = maxLives;
 		const abc = 'abcdefghijklmnñopqrstuvwxyz'.split('');
 		abc.forEach(renderGuessesBtn);
+		console.log(targetWord);
+		console.log(hideWord());
+		reviewLives();
+		
 	}
 	main()
 	document.addEventListener('keyup', update, false);
