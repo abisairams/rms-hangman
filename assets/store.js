@@ -87,6 +87,11 @@ const idb = new Idb();
     const parentBoxes = document.getElementById('parentBoxes');
     const creditHtml = document.getElementById('credits');
     parentBoxes.innerHTML = '';
-     
+    
+    const closeButton = document.getElementById('close');
+
+    closeButton.addEventListener('click', function (e) {
+        window.location.href = "index.html";
+    }, false)
     
 })()
