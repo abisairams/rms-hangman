@@ -37,7 +37,7 @@
     <div class="guesses" id="guesses-container">
 
     </div>
-    <div class="modal-store close">
+    <div class="modal-store closed">
       <header>
         <h3>Tus packs</h3>
       </header>
@@ -62,11 +62,11 @@
       </footer>
     </div>
 
-    <div class="lock-layout">
+    <div class="lock-layout no-locked" id="lock-layout">
       <div class="body">
-        <div class="message level-success">
-          <h3>No tiene mas vidas</h3>
-          <span>Espere <span id="timing">4</span> minutos</span>
+        <div class="message level-success" id="message-body">
+          <h3 id="title">No tiene mas vidas</h3>
+          <span id="message">Espere <span id="timing">4</span> minutos</span>
         </div>
       </div>
     </div>
