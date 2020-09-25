@@ -160,6 +160,39 @@ const idb = new Idb();
 	const maxLives = 6;
 	var targetWord = '';
 
+
+	function showMessage(typeMessage) {
+		const lock_layout = document.querySelector('#lock-layout');
+		const message_body = document.querySelector('#message-body');
+		const title = document.querySelector('#title');
+		const message = document.querySelector('#message');
+
+		lock_layout.className = "lock-layout locked";
+
+		toggleKeyupListener();
+
+		if (typeMessage == "level-fail") {
+			title.textContent = "No tiene mas vidas restantes";
+			message_body.className = "message level-fail";
+			message.textContent = "Espere 4 minutos";
+		} else if(typeMessage == "level-success") {
+			title.textContent = "Bien hecho";
+			message_body.className = "message level-success";
+			message.textContent = "Nivel superado";
+
+		} else if(typeMessage == "end-game") {
+			title.textContent = "Fin del juego";
+			message_body.className = "message end-game";
+			message.textContent = "Todos los niveles han sido superados";
+		}
+
+	}
+	function hideMessage() {
+		const lock_layout = document.querySelector('#lock-layout');
+		lock_layout.className = "lock-layout no-locked";
+
+		toggleKeyupListener();
+	}
 	
 	function renderGuessesBtn(val) {
 		const props = { class: 'filled', textContent: val.toUpperCase() };
@@ -212,6 +245,7 @@ const idb = new Idb();
 		if (!oldlevel) {
 			localStorage.setItem('level', 1);			
 		} else {
+			if (parseInt(oldlevel) > wordList.length) return;
 			localStorage.setItem('level', parseInt(oldlevel) + 1);
 		}
 	}
@@ -220,7 +254,9 @@ const idb = new Idb();
 		if (readLevel() - 1 < wordList.length) {
 			targetWord = wordList[readLevel() -1];
 		} else {
-			alert('All level are completed');
+			// alert('All level are completed');
+			showMessage('end-game')
+			return "end-game";
 		}
 	}
 	function hideWord() {
@@ -277,17 +313,25 @@ const idb = new Idb();
 
 		if (remainingLives <= 0) {
 			setTimeout(function () {
-				alert('You lost, try again');
-				resetGame()
+				// alert('You lost, try again');
+				showMessage("level-fail");
+				setTimeout(() => {
+					hideMessage()
+					resetGame()
+				}, 4000);
 			},10)
 		}
 	}
 	function checkIfWon() {
 		if (targetWord == hideWord()) {
 			setTimeout(function () {
-				alert('You won');
+				// alert('You won');
+				showMessage("level-success");
 				updateLevel();
-				resetGame();
+				setTimeout(() => {
+					hideMessage()
+					resetGame()
+				}, 2000);
 			},200)
 		}
 	}
@@ -322,6 +366,16 @@ const idb = new Idb();
 		const abc = 'abcdefghijklmnñopqrstuvwxyz'.split('');
 		abc.forEach(renderGuessesBtn);
 	}
-	main()
+	
 	document.addEventListener('keyup', update, false);
+
+	function toggleKeyupListener() {
+		if (document.querySelector('#lock-layout').className == "lock-layout locked") {
+			document.removeEventListener('keyup', update, false);
+		} else {
+			document.addEventListener('keyup', update, false);
+		}
+	}
+
+	main()
 })()
