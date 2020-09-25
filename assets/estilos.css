@@ -177,6 +177,14 @@ footer button.close {
   background: rgba(0, 0, 0, 0.81);
 }
 
+.lock-layout.locked {
+  display: block;
+}
+
+.lock-layout.no-locked {
+  display: none;
+}
+
 .lock-layout .body {
   display: flex;
   align-items: center;
