@@ -136,8 +136,12 @@ async function updateStore(item, cant, operation) {
     const oldCant = await readStore(item);
     const newCant = eval(`${oldCant} ${operation} ${cant}`);
     const transaction = idb.update('store', item, {name: item, cant: newCant}, function (e) {
-        console.log(`${cant} ${item} agregados a tu almacen`);
-        
+        if (operation == '-') {
+            console.log(`${cant} ${item} removido de tu almacen`)
+        } else {
+            console.log(`${cant} ${item} agregados a tu almacen`);
+        }
+
     });
 
 }
