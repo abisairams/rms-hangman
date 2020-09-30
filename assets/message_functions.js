@@ -31,7 +31,7 @@ function hideMessage() {
 
 function saveTimer() {
 	const date = new Date();
-	const endTimer = date.getTime() + 1000*60*4;
+	const endTimer = date.getTime() + 1000*10*4;
 
 	if (localStorage.getItem('end-timer')  === "") {
 		localStorage.setItem('end-timer', endTimer);
@@ -51,7 +51,7 @@ function formatTimer() {
 		remainingTime
 	}
 }
-function renderTimer(intervalId) {
+function renderTimer() {
 	const msgHtml = document.querySelector("#message");
 	const formatedTimer = formatTimer();
 
@@ -61,12 +61,17 @@ function renderTimer(intervalId) {
 		msgHtml.textContent = `Espere ${formatedTimer.remainingSeconds} segundos`;
 	}
 
+}
 
-	if (formatedTimer.remainingTime <= 1000) {
-		localStorage.setItem("end-timer", "");
-		resetGame();
-		hideMessage();
-		toggleKeyupListener();
-		clearInterval(intervalId);
-	}
+function isTimerEnd(intervalId) {
+	const formatedTimer = formatTimer();
+
+	return new Promise(function (resolve, reject) {
+		if (formatedTimer.remainingTime <= 1000) {
+			localStorage.setItem("end-timer", "");
+			hideMessage();
+			clearInterval(intervalId);
+			resolve(true);
+		}
+	})
 }

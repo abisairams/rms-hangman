@@ -225,12 +225,14 @@ const idb = new Idb();
 		if (remainingLives <= 0) {
 			saveTimer();
 			setTimeout(function () {
-				// alert('You lost, try again');
 				showMessage("level-fail");
 				toggleKeyupListener();
 				renderTimer();
-				const intervalId = setInterval(() => {
-					renderTimer(intervalId);
+				const intervalId = setInterval(async () => {
+					renderTimer();
+					await isTimerEnd(intervalId)
+					resetGame();
+					toggleKeyupListener();
 				},1000)
 			},10)
 		}
