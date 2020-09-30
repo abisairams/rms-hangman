@@ -96,48 +96,6 @@ const idb = new Idb();
 	const maxLives = 6;
 	var targetWord = '';
 
-	function saveTimer() {
-		const date = new Date();
-		const endTimer = date.getTime() + 1000*60*4;
-
-		if (localStorage.getItem('end-timer')  === "") {
-			localStorage.setItem('end-timer', endTimer);
-		}
-	}
-	function formatTimer() {
-		const endTimer = localStorage.getItem('end-timer');
-		const date = new Date();
-		const now  = date.getTime();
-		const remainingTime = endTimer - now;
-		const remainingMinutes = Math.floor(remainingTime / 60000);
-		const remainingSeconds = Math.floor(remainingTime / 1000 % 60);
-
-		return {
-			remainingMinutes,
-			remainingSeconds,
-			remainingTime
-		}
-	}
-	function renderTimer(intervalId) {
-		const msgHtml = document.querySelector("#message");
-		const formatedTimer = formatTimer();
-
-		if (formatedTimer.remainingMinutes !== 0) {
-			msgHtml.textContent = `Espere ${formatedTimer.remainingMinutes}:${formatedTimer.remainingSeconds} minutos`;
-		} else {
-			msgHtml.textContent = `Espere ${formatedTimer.remainingSeconds} segundos`;
-		}
-
-
-		if (formatedTimer.remainingTime <= 1000) {
-			localStorage.setItem("end-timer", "");
-			resetGame();
-			hideMessage();
-			toggleKeyupListener();
-			clearInterval(intervalId);
-		}
-	}
-
 
 	function renderGuessesBtn(val) {
 		const props = { class: 'filled', textContent: val.toUpperCase() };
