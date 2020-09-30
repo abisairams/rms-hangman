@@ -52,20 +52,6 @@ const idb = new Idb();
 
 		}
 	}
-
-	function applyShorcut(pack) {
-		switch (pack) {
-			case 'clean':
-				return cleanOneButton(); break;
-			case 'show':
-				return showOneLetter(); break;
-			case 'blackbox':
-				randomGift(); break;
-			default:
-				break;
-		}
-	}
-
 	
 
 	function showAlert(pack) {
