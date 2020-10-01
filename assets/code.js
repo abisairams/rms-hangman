@@ -143,14 +143,10 @@ const idb = new Idb();
 	}
 
 	function fetchWord() {
-		console.log(wordList.length);
 		if (readLevel() - 1 < wordList.length) {
-			targetWord = wordList[readLevel() -1];
-		} else {
-			// alert('All level are completed');
-			showMessage('end-game')
-			return "end-game";
+			return targetWord = wordList[readLevel() -1];
 		}
+		return false;
 	}
 
 	function hideWord() {
@@ -274,7 +270,9 @@ const idb = new Idb();
 		if (!readLevel()) {
 			initLevel();
 		}
-		fetchWord();
+		if (!fetchWord()) {
+			showMessage('end-game');
+		}
 
 
 		const liveHtm = document.getElementById('remaining-lives');		
