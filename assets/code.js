@@ -179,7 +179,6 @@ const idb = new Idb();
 
 	function disableMatchButton(key) {
 		const buttons = document.querySelectorAll('#guesses-container button.filled');
-		console.log(key)
 		buttons.forEach(function (btn) {
 
 			if (btn.textContent == key.toUpperCase()) {
@@ -192,7 +191,6 @@ const idb = new Idb();
 
 	function storeGuess(key) {
 		if (/^[a-zA-Z]$/.test(key)) {
-			// console.log(key);
 			
 			if (!guesses.includes(key.toLowerCase())) {
 				guesses.push(key.toLowerCase());
@@ -259,10 +257,8 @@ const idb = new Idb();
 	function update(e) {
 		toggleBtnState(e);
 		const isKeyStored = storeGuess(e.key || e.target.textContent);
-		console.log(hideWord());
 		if (!isKeyStored) {
 			reviewLives();
-			console.log(hideWord())
 		}
 		checkIfWon();
 	}
@@ -286,7 +282,7 @@ const idb = new Idb();
 		const abc = 'abcdefghijklmnñopqrstuvwxyz'.split('');
 		abc.forEach(renderGuessesBtn);
 		console.log(targetWord);
-		console.log(hideWord());
+		hideWord();
 		reviewLives();
 		
 	}
