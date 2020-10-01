@@ -128,16 +128,18 @@ const idb = new Idb();
 		localStorage.setItem('level', 1);
 	}
 
+	function saveItem(itemName, itemValue) {
+		localStorage.setItem(itemName, itemValue);
+	}
+
 	function updateLevel() {
 		const oldlevel = readLevel();
-		
-		if (!oldlevel) {
-			localStorage.setItem('level', 1);			
-		} else {
-			if (parseInt(oldlevel) > wordList.length) return;
-			localStorage.setItem('level', parseInt(oldlevel) + 1);
-			localStorage.setItem('guesses', '');
-		}
+
+		!oldlevel ? saveItem('level', 1) : null ;
+
+		if (parseInt(oldlevel) > wordList.length) return;
+		saveItem('level', parseInt(oldlevel) + 1);
+		saveItem('guesses', '');
 	}
 
 	function fetchWord() {
