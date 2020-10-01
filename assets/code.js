@@ -196,7 +196,7 @@ const idb = new Idb();
 			
 			if (!guesses.includes(key.toLowerCase())) {
 				guesses.push(key.toLowerCase());
-				saveItem('guesses', localStorage.getItem('guesses') + key.toLowerCase());
+				saveItem('guesses', getItem('guesses') + key.toLowerCase());
 				return false;
 			}
 			return true;
