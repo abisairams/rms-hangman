@@ -103,30 +103,18 @@ const idb = new Idb();
 		btn.addEventListener('click', update, false);
 		guessesBtnParent.appendChild(btn);
 	}
-	function toggleBtnState(e) {
-		if (e.type == 'click') {
-			if (e.target.className == 'filled') {
-				e.target.className = 'empty';
-			} else {
-				e.target.className = 'filled';
-			}
-			e.target.disabled = true;
-		} else {
-			const buttons = document.querySelectorAll('button');
-			buttons.forEach(function (btn) {
-				
-				if (btn.textContent == e.key.toUpperCase()) {
-					btn.className = 'empty';
-					btn.disabled = true;
-					// if (btn.className == 'filled') {
-					// } else {
-					// 	btn.className = 'filled';
-					// }
-				}
 
-			})
+	async function toggleBtnState(e) {
+		if (e.type == 'click') {
+			this.className = 'empty';
+			this.disabled = true;
+			return;
 		}
+		const button = await findButton(e.key);
+		button.className = 'empty';
+		button.disabled = true;
 	}
+
 	async function loadDB(path) {
 		const response = await fetch(path);
 		const db = await response.json();
