@@ -123,9 +123,11 @@ const idb = new Idb();
 	function readLevel() {
 		return localStorage.getItem('level');
 	}
+
 	function initLevel() {
 		localStorage.setItem('level', 1);
 	}
+
 	function updateLevel() {
 		const oldlevel = readLevel();
 		
@@ -137,6 +139,7 @@ const idb = new Idb();
 			localStorage.setItem('guesses', '');
 		}
 	}
+
 	function fetchWord() {
 		console.log(wordList.length);
 		if (readLevel() - 1 < wordList.length) {
@@ -147,6 +150,7 @@ const idb = new Idb();
 			return "end-game";
 		}
 	}
+
 	function hideWord() {
 		answerBntParent.innerHTML = '';
 		var hiddenWord = '';
@@ -170,6 +174,7 @@ const idb = new Idb();
 		
 		return hiddenWord;
 	}
+
 	function disableMatchButton(key) {
 		const buttons = document.querySelectorAll('#guesses-container button.filled');
 		console.log(key)
@@ -182,6 +187,7 @@ const idb = new Idb();
 
 		})
 	}
+
 	function storeGuess(key) {
 		if (/^[a-zA-Z]$/.test(key)) {
 			// console.log(key);
@@ -194,6 +200,7 @@ const idb = new Idb();
 			return true;
 		}
 	}
+
 	function reviewLives() {
 		var remainingLives = maxLives;
 		var str = targetWord.toLowerCase();
@@ -221,6 +228,7 @@ const idb = new Idb();
 			},10)
 		}
 	}
+
 	function checkIfWon() {
 		if (targetWord == hideWord()) {
 			setTimeout(function () {
@@ -236,6 +244,7 @@ const idb = new Idb();
 			},200)
 		}
 	}
+
 	function resetGame() {
 		const parent = document.getElementById('guesses-container');
 		parent.innerHTML = '';
@@ -244,6 +253,7 @@ const idb = new Idb();
 		targetWord = '';
 		main();
 	}
+
 	function update(e) {
 		toggleBtnState(e);
 		const isKeyStored = storeGuess(e.key || e.target.textContent);
@@ -254,6 +264,7 @@ const idb = new Idb();
 		}
 		checkIfWon();
 	}
+
 	function main() {
 		if (!localStorage.getItem('guesses')) {
 			localStorage.setItem('guesses', '')
