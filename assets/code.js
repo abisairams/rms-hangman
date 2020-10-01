@@ -132,6 +132,10 @@ const idb = new Idb();
 		localStorage.setItem(itemName, itemValue);
 	}
 
+	function getItem(itemName) {
+		return localStorage.getItem(itemName);
+	}
+
 	function updateLevel() {
 		const oldlevel = readLevel();
 
@@ -152,7 +156,7 @@ const idb = new Idb();
 	function hideWord() {
 		answerBntParent.innerHTML = '';
 		var hiddenWord = '';
-		guesses = localStorage.getItem('guesses').split('');
+		guesses = getItem('guesses').split('');
 
 		targetWord.split('').map(letter => {
 			if (!guesses.includes(letter.toLowerCase())) {
@@ -203,7 +207,7 @@ const idb = new Idb();
 		var remainingLives = maxLives;
 		var str = targetWord.toLowerCase();
 		const liveHtm = document.getElementById('remaining-lives');
-		guesses = localStorage.getItem('guesses').split('')
+		guesses = getItem('guesses').split('')
 		guesses.filter(function (val) {
 			if (!str.includes(val)) {
 				remainingLives--;	
@@ -264,7 +268,7 @@ const idb = new Idb();
 	}
 
 	function main() {
-		if (!localStorage.getItem('guesses')) {
+		if (!getItem('guesses')) {
 			localStorage.setItem('guesses', '')
 		}
 		if (!readLevel()) {
