@@ -196,7 +196,7 @@ const idb = new Idb();
 			
 			if (!guesses.includes(key.toLowerCase())) {
 				guesses.push(key.toLowerCase());
-				localStorage.setItem('guesses', localStorage.getItem('guesses') + key.toLowerCase());
+				saveItem('guesses', localStorage.getItem('guesses') + key.toLowerCase());
 				return false;
 			}
 			return true;
@@ -250,7 +250,7 @@ const idb = new Idb();
 	function resetGame() {
 		const parent = document.getElementById('guesses-container');
 		parent.innerHTML = '';
-		localStorage.setItem('guesses', '');
+		saveItem('guesses', '');
 		guesses = [];
 		targetWord = '';
 		main();
@@ -269,7 +269,7 @@ const idb = new Idb();
 
 	function main() {
 		if (!getItem('guesses')) {
-			localStorage.setItem('guesses', '')
+			saveItem('guesses', '')
 		}
 		if (!readLevel()) {
 			initLevel();
