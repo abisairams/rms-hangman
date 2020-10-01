@@ -117,13 +117,9 @@ const idb = new Idb();
 
 	async function loadDB(path) {
 		const response = await fetch(path);
-		const db = await response.json();
-		const tmp = [];
-		for (const word in db) {
-			tmp.push(db[word]);
-		}
-		return tmp;
+		return await response.json();
 	}
+
 	function readLevel() {
 		return localStorage.getItem('level');
 	}
