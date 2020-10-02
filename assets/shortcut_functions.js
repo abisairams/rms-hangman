@@ -1,19 +1,40 @@
-async function showOneLetter() {
-	const encrypted = [];
-	for (let i = 0; i < targetWord.length; i++) {
-		if (targetWord[i] !== hideWord()[i]) {
-			encrypted.push(targetWord[i]);
+function findButton(key) {
+	const buttons = document.querySelectorAll('button');
+	return new Promise((resolve, reject) => {
+		buttons.forEach(function (btn) {
+			if (btn.textContent == key.toUpperCase()) {
+				resolve(btn);
+			}
+		})
+	})
+}
+
+function decryptWord(targetWord, targetWordHidden) {
+	const wordLength = targetWord.length;
+	const wordToArray = targetWord.split('');
+
+	return wordToArray.filter(function (letter, index) {
+		if (letter !== targetWordHidden[index]) {
+			return letter
 		}
-	}
-	// return false if the word is already guessed,
-	// to not continue on main function
-	if (encrypted.length == 0) return false;
-	const randomBtn = encrypted[Math.floor(Math.random() * encrypted.length)];
+	})
+}
+
+function pickSomethingRandom(array) {
+	return array[Math.floor(Math.random() * array.length)];
+}
+
+async function showOneLetter(targetWord, targetWordHidden) {
+	const encriptedLettersRamining = decryptWord(targetWord, targetWordHidden);
+
+	if (!encriptedLettersRamining.length) return false;
+	const randomBtn = pickSomethingRandom(encriptedLettersRamining);
 	const btn = await findButton(randomBtn);
 	btn.click();
 	return true;
 }
-function cleanOneButton() {
+
+function cleanOneButton(targetWord) {
 	const buttons = document.querySelectorAll('#guesses-container button.filled');
 	const noPlayingWords = [];
 	
@@ -24,8 +45,7 @@ function cleanOneButton() {
 	*/
 	buttons.forEach(btn => {
 		if (!targetWord.includes(btn.textContent.toLowerCase())) {
-			noPlayingWords.push(btn);				
-		}
+			noPlayingWords.push(btn);		}
 	})
 	// return false if all no playing buttons has been checked, 
 	// to not continue on main function
@@ -34,11 +54,11 @@ function cleanOneButton() {
 	randomBtn.className = 'empty';
 	randomBtn.disabled = true;
 }
-function randomGift() {
-	const gifts = [giveFreeMoney, cleanOneButton, showOneLetter];
 
+function randomGift(targetWord, hiddenWord) {
+	const gifts = [giveFreeMoney, cleanOneButton, showOneLetter];
 	const random = gifts[Math.floor(Math.random() * gifts.length)];
-	random()
+	random(targetWord, hiddenWord)
 }
 
 async function giveFreeMoney() {
@@ -50,14 +70,14 @@ async function giveFreeMoney() {
 	}
 }
 
-function applyShorcut(pack) {
+function applyShorcut(pack, targetWord, targetWordHidden) {
 	switch (pack) {
 		case 'clean':
-			return cleanOneButton(); break;
+			return cleanOneButton(targetWord); break;
 		case 'show':
-			return showOneLetter(); break;
+			return showOneLetter(targetWord,targetWordHidden); break;
 		case 'blackbox':
-			randomGift(); break;
+			randomGift(targetWord, targetWordHidden); break;
 		default:
 			break;
 	}
