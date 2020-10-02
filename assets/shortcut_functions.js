@@ -45,21 +45,23 @@ function cleanOneButton(targetWord) {
 	})
 
 	if (!noPlayingWords.length) return false;
-	const randomBtn = noPlayingWords[Math.floor(Math.random() * noPlayingWords.length)];
+	const randomBtn = pickSomethingRandom(noPlayingWords);
 	randomBtn.className = 'empty';
 	randomBtn.disabled = true;
+	return true;
 }
 
 function randomGift(targetWord, hiddenWord) {
 	const gifts = [giveFreeMoney, cleanOneButton, showOneLetter];
 	const random = pickSomethingRandom(gifts);
 	random(targetWord, hiddenWord)
+	return true;
 }
 
 async function giveFreeMoney() {
 	const availibleCredits = [5,10,20,30,40,50];
-	const credit = availibleCredits[Math.floor((Math.random() * availibleCredits.length))];
-	const doTransaction = await updateBank(credit, '+');
+	const creditRandom = pickSomethingRandom(availibleCredits);
+	const doTransaction = await updateBank(creditRandom, '+');
 	if (doTransaction) {
 		alert(`${credit} creditos depositados a tu cuenta`)
 	}
