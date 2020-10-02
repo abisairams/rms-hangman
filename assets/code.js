@@ -43,7 +43,8 @@ const idb = new Idb();
 		} else {
 			// this validation is to check if guessing word is in progress,
 			// if response is false means shorcut is completed;
-			if (applyShorcut(pack) == false) return; 
+			const targetWordHidden = hideWord();
+			if (applyShorcut(pack, targetWord, targetWordHidden) == false) return;
 			await updateStore(pack, 1, '-');
 			const updatedCant = await readStore(pack);
 			if (!updatedCant) {
@@ -70,17 +71,6 @@ const idb = new Idb();
 				}
 			})
 		}
-	}
-
-	function findButton(key) {
-		const buttons = document.querySelectorAll('button');
-		return new Promise((resolve, reject) => {
-			buttons.forEach(function (btn) {
-				if (btn.textContent == key.toUpperCase()) {
-					resolve(btn);
-				}
-			})
-		})
 	}
 
 	const itemsAvatar = document.querySelectorAll('img');
