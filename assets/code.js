@@ -36,8 +36,8 @@ const idb = new Idb();
 			return;
 		};
 
-		const cant = await readStore(pack);
-		if (!cant) {
+		const availablePack = await readStore(pack);
+		if (!availablePack) {
 			this.className = 'disabled';
 			showAlert(pack);
 		} else {
