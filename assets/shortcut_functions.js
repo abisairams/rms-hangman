@@ -63,7 +63,7 @@ async function giveFreeMoney() {
 	const creditRandom = pickSomethingRandom(availibleCredits);
 	const doTransaction = await updateBank(creditRandom, '+');
 	if (doTransaction) {
-		alert(`${credit} creditos depositados a tu cuenta`)
+		alert(`${creditRandom} creditos depositados a tu cuenta`)
 	}
 }
 
