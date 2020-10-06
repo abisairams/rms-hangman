@@ -148,6 +148,7 @@ const idb = new Idb();
 
 	function hideWord() {
 		answerBntParent.innerHTML = '';
+		const tempAnswerParent = document.createElement('div');
 		var hiddenWord = '';
 		guesses = getItem('guesses').split('');
 
@@ -156,15 +157,16 @@ const idb = new Idb();
 				hiddenWord += '-';
 				const props = {class: 'empty', textContent: '0'};
 				const btn = newElement('button', props);
-				answerBntParent.appendChild(btn);
+				tempAnswerParent.appendChild(btn);
 			} else {
 				hiddenWord += letter;
 				const props = { class: 'filled', textContent: letter };
 				const btn = newElement('button', props);
-				answerBntParent.appendChild(btn);
+				tempAnswerParent.appendChild(btn);
 			}
 		})
 
+		answerBntParent.appendChild(tempAnswerParent);
 		guesses.forEach(disableMatchButton);
 		
 		return hiddenWord;
