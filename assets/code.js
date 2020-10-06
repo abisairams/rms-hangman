@@ -177,8 +177,7 @@ const idb = new Idb();
 		buttons.forEach(function (btn) {
 
 			if (btn.textContent == key.toUpperCase()) {
-				btn.disabled = true;
-				btn.className = 'empty';
+				customSettingsToOneElement(btn, 'empty');
 			}
 
 		})
