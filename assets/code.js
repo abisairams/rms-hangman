@@ -94,15 +94,18 @@ const idb = new Idb();
 		guessesBtnParent.appendChild(btn);
 	}
 
+	function customSettingsToOneElement(elem, classNameValue) {
+		elem.className = classNameValue;
+		elem.disabled = true;
+		return;
+	}
+
 	async function toggleBtnState(e) {
 		if (e.type == 'click') {
-			this.className = 'empty';
-			this.disabled = true;
-			return;
+			return customSettingsToOneElement(this, 'empty');
 		}
 		const button = await findButton(e.key);
-		button.className = 'empty';
-		button.disabled = true;
+		return customSettingsToOneElement(button, 'empty');
 	}
 
 	async function loadDB(path) {
