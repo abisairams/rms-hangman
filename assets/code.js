@@ -114,7 +114,7 @@ const idb = new Idb();
 	}
 
 	function readLevel() {
-		return localStorage.getItem('level');
+		return parseInt(localStorage.getItem('level'));
 	}
 
 	function initLevel() {
@@ -134,8 +134,8 @@ const idb = new Idb();
 
 		!oldlevel ? saveItem('level', 1) : null ;
 
-		if (parseInt(oldlevel) > wordList.length) return;
-		saveItem('level', parseInt(oldlevel) + 1);
+		if (oldlevel > wordList.length) return;
+		saveItem('level', oldlevel + 1);
 		saveItem('guesses', '');
 	}
 
