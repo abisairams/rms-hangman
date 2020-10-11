@@ -41,10 +41,11 @@ const idb = new Idb();
 			this.className = 'disabled';
 			showAlert(pack);
 		} else {
-			// this validation is to check if guessing word is in progress,
-			// if response is false means shorcut is completed;
 			const targetWordHidden = hideWord();
-			if (applyShorcut(pack, targetWord, targetWordHidden) == false) return;
+			const doTasks = applyShorcut();
+			const taskToDo = doTasks[pack];
+
+			if (!taskToDo(targetWord, targetWordHidden)) return;
 			await updateStore(pack, 1, '-');
 			const updatedCant = await readStore(pack);
 			if (!updatedCant) {
@@ -273,7 +274,8 @@ const idb = new Idb();
 		const levelHtm = document.getElementById('current-level');
 		levelHtm.textContent = readLevel();
 		liveHtm.textContent = maxLives;
-		const abc = 'abcdefghijklmnñopqrstuvwxyz'.split('');
+		// const abc = 'abcdefghijklmnñopqrstuvwxyz'.split('');
+		const abc = 'qwertyuiopasdfghjklñzxcvbnm'.split('');
 		abc.forEach(renderGuessesBtn);
 		console.log(targetWord);
 		hideWord();

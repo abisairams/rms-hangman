@@ -68,14 +68,9 @@ async function giveFreeMoney() {
 }
 
 function applyShorcut(pack, targetWord, targetWordHidden) {
-	switch (pack) {
-		case 'clean':
-			return cleanOneButton(targetWord); break;
-		case 'show':
-			return showOneLetter(targetWord,targetWordHidden); break;
-		case 'blackbox':
-			randomGift(targetWord, targetWordHidden); break;
-		default:
-			break;
+	return {
+		clean: cleanOneButton,
+		show: showOneLetter,
+		blackbox: randomGift
 	}
 }
