@@ -227,7 +227,6 @@ const idb = new Idb();
 	function checkIfWon() {
 		if (targetWord == hideWord()) {
 			setTimeout(function () {
-				// alert('You won');
 				showMessage("level-success");
 				toggleKeyupListener()
 				updateLevel();
