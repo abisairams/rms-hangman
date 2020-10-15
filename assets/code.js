@@ -82,10 +82,10 @@ const idb = new Idb();
 
 	const guessesBtnParent = document.getElementById('guesses-container');
 	const answerBntParent = document.getElementById('answer');
-	var wordList = await loadDB('./assets/database.json');
-	var guesses = [];
+	const wordList = await loadDB('./assets/database.json');
 	const maxLives = 6;
-	var targetWord = '';
+	let guesses = [];
+	let targetWord = '';
 
 
 	function renderGuessesBtn(val) {
@@ -150,7 +150,7 @@ const idb = new Idb();
 	function hideWord() {
 		answerBntParent.innerHTML = '';
 		const tempAnswerParent = document.createElement('div');
-		var hiddenWord = '';
+		let hiddenWord = '';
 		guesses = getItem('guesses').split('');
 
 		targetWord.split('').map(letter => {
@@ -197,8 +197,8 @@ const idb = new Idb();
 	}
 
 	function reviewLives() {
-		var remainingLives = maxLives;
-		var str = targetWord.toLowerCase();
+		let remainingLives = maxLives;
+		const str = targetWord.toLowerCase();
 		const liveHtm = document.getElementById('remaining-lives');
 		guesses = getItem('guesses').split('')
 		guesses.filter(function (val) {
