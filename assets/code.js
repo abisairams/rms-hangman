@@ -30,24 +30,24 @@ const idb = new Idb();
 	}
 
 	async function handleEvent() {
-		const pack = this.alt;
-		if (pack == 'store') {
+		const packName = this.alt;
+		if (packName == 'store') {
 			window.location = 'store.html';
 			return;
 		};
 
-		const availablePack = await readStore(pack);
+		const availablePack = await readStore(packName);
 		if (!availablePack) {
 			this.className = 'disabled';
-			showAlert(pack);
+			showAlert(packName);
 		} else {
 			const targetWordHidden = hideWord();
 			const doTasks = applyShorcut();
-			const taskToDo = doTasks[pack];
+			const taskToDo = doTasks[packName];
 
 			if (!taskToDo(targetWord, targetWordHidden)) return;
-			await updateStore(pack, 1, '-');
-			const updatedCant = await readStore(pack);
+			await updateStore(packName, 1, '-');
+			const updatedCant = await readStore(packName);
 			if (!updatedCant) {
 				this.className = 'disabled';
 			}
