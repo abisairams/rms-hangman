@@ -1,0 +1,48 @@
+{
+    "name": "Rms-Hangman",
+    "short_name": "Hangman",
+    "icons": [
+        {
+            "src": "img/icons/qgo 48px.png",
+            "type": "image/png",
+            "sizes": "48x48"
+        },
+        {
+            "src": "img/icons/qgo 144px.png",
+            "type": "image/png",
+            "sizes": "144x144"
+        },
+        {
+            "src": "img/icons/qgo 192px.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "img/icons/qgo 256px.png",
+            "type": "image/png",
+            "sizes": "256x256"
+        },
+        {
+            "src": "img/icons/qgo 384px.png",
+            "type": "image/png",
+            "sizes": "384x384"
+        },
+        {
+            "src": "img/icons/qgo 512px.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ],
+    "start_url": "index.html",
+    "display": "standalone",
+    "background_color": "#1f5d55",
+    "theme_color": "#288e81",
+    "description": "Juego del ahorcado mejorado",
+    "prefer_related_applications": true,
+    "related_applications": [
+      {
+        "platform": "play",
+        "id": "com.google.samples.apps.iosched"
+      }
+    ]
+}
