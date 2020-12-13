@@ -74,13 +74,13 @@
 
   <script>
     
-    // if ('serviceWorker' in navigator) {
-    //   navigator.serviceWorker.register('sw.js')
-    //     .then(res => {
-    //       console.log('Service worker is registered');
-    //     })
-    //     .catch(err => {throw err});
-    // }
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js')
+        .then(res => {
+          console.log('Service worker is registered');
+        })
+        .catch(err => {throw err});
+    }
   
   </script>
   <script src="assets/lib/indexedDB-v2.0.0.js"></script>
