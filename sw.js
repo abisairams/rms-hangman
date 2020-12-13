@@ -7,7 +7,11 @@ self.addEventListener('install', e => {
         .then(cache => {
             return cache.addAll([
                 'assets/database.json',
-                'assets/mylibrary.js',
+                'assets/lib/mylibrary.js',
+                'assets/lib/indexedDB-v2.0.0.js',
+                'assets/shortcut_functions.js',
+                'assets/message_functions.js',
+                'assets/store_functions.js',
                 'assets/estilos.css',
                 'assets/code.js',
                 'img/clean.svg',
