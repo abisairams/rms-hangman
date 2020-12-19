@@ -185,7 +185,7 @@ const idb = new Idb();
 	}
 
 	function storeGuess(key) {
-		if (/^[A-Z]$/.test(key.toUpperCase())) {
+		if (/Ñ|^[A-Z]$/.test(key.toUpperCase())) {
 			if (!guesses.includes(key.toLowerCase())) {
 				guesses.push(key.toLowerCase());
 				saveItem('guesses', getItem('guesses') + key.toLowerCase());
