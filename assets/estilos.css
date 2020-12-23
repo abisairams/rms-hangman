@@ -82,7 +82,7 @@ button.filled {
 div.guesses {
   margin: 50px auto;
   display: block;
-  max-width: 400px;
+  max-width: 350px;
   text-align: center;
 }
 div.guesses button.filled {
